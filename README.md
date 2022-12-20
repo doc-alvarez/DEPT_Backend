@@ -28,7 +28,7 @@ Your redis-server should be running on http://127.0.0.1:6379
 
 ## Clone the repository and install Dependencies
 `git clone https://github.com/doc-alvarez/DEPT_Backend.git`
-##
+
 `npm install`
 
 ## Available Scripts
@@ -63,7 +63,7 @@ Run the test cases:
 
 - Server root 404. Security check. No disclousure.
 
-##API Documentation
+## API Documentation
 
 ### `GET http://localhost:PORT/spaceX/api/v1/$userId/launches`
 
