@@ -7,14 +7,14 @@
     "test": "test"
   },
   "scripts": {
-    "test": "tap \"test/**/*.test.js\"",
+    "test": "tap \"test/**/*.test.js\" --no-coverage",
     "start": "fastify start -l info app.js",
     "dev": "fastify start -w -l info -P app.js"
   },
   "keywords": [
     "REST",
     "API",
-    "Microservice",
+    "Microservices",
     "Fastify",
     "Redis"
   ],

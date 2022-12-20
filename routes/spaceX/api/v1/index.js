@@ -3,6 +3,8 @@ const buildMergedArray = require("../../../../utils/helpers.js");
 
 module.exports = async function (fastify, opts) {
   const redis = fastify.redis.client;
+
+  //Get Launches endpoint
   fastify.get("/:userId/launches", async function (request, reply) {
     const userId = request.params.userId;
     try {
@@ -11,7 +13,7 @@ module.exports = async function (fastify, opts) {
         await Promise.all([
           fetch("https://api.spacexdata.com/v3/launches"),
           fetch("https://api.spacexdata.com/v3/rockets"),
-          redis.smembers(`${userId}:favs`),
+          redis.smembers(`${userId}:favourites`),
         ]);
       const [dataLaunches, dataRockets] = await Promise.all([
         streamLaunches.json(),
@@ -28,18 +30,40 @@ module.exports = async function (fastify, opts) {
       throw error;
     }
   });
-  fastify.get("/:userId/addFav/:flightId", async function (request, reply) {
+
+  //Add Favourite endpoint
+  fastify.get("/:userId/add/:flightId", async function (request, reply) {
     const userId = request.params.userId;
     try {
-      return await redis.sadd(`${userId}:favs`, `${request.params.flightId}`);
+      const result = await redis.sadd(
+        `${userId}:favourites`,
+        `${request.params.flightId}`
+      );
+      if (result === 1) {
+        return {
+          status: 200,
+          message: "Favourite added",
+        };
+      }
     } catch (error) {
       throw error;
     }
   });
-  fastify.get("/:userId/removeFav/:flightId", async function (request, reply) {
+
+  //Remove Favourite endpoint
+  fastify.get("/:userId/remove/:flightId", async function (request, reply) {
     const userId = request.params.userId;
     try {
-      return await redis.srem(`${userId}:favs`, `${request.params.flightId}`);
+      const result = await redis.srem(
+        `${userId}:favourites`,
+        `${request.params.flightId}`
+      );
+      if (result === 1) {
+        return {
+          status: 200,
+          message: "Favourite removed",
+        };
+      }
     } catch (error) {
       throw error;
     }
