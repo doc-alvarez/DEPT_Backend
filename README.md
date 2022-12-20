@@ -60,18 +60,18 @@ Run the test cases:
 
 ##API Documentation
 
-###`GET http://localhost:PORT/spaceX/api/v1/$userId/launches`
+### `GET http://localhost:PORT/spaceX/api/v1/$userId/launches`
 
-> Query all Launches with Rocket data included, and returns an array of objects in application/json format.
-> Launches will have an added attribute: isFavourite:Boolean - if the launch is included on the $userId favourite list persisted on redis db.
+- Query all Launches with Rocket data included, and returns an array of objects in application/json format.
+- Launches will have an added attribute: isFavourite:Boolean - if the launch is included on the $userId favourite list persisted on redis db.
 
-###`GET http://localhost:PORT/spaceX/api/v1/$userId/add/$flight_number`
+### `GET http://localhost:PORT/spaceX/api/v1/$userId/add/$flight_number`
 
-> Adds a launch by its flight number attribute to the userId favourite list.
+- Adds a launch by its flight number attribute to the userId favourite list.
 
-###`GET http://localhost:PORT/spaceX/api/v1/$userId/remove/$flight_number`
+### `GET http://localhost:PORT/spaceX/api/v1/$userId/remove/$flight_number`
 
-> Removes a favourite launch by its flight number attribute from the userId favourite list.
+- Removes a favourite launch by its flight number attribute from the userId favourite list.
 
 ## Learn More
 
