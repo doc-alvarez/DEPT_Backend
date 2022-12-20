@@ -9,6 +9,7 @@ const fp = require("fastify-plugin");
  */
 module.exports = fp(async function (fastify, opts) {
   fastify.register(require("fastify-ioredis"), {
-    host: process.env.REDIS_HOST,
+    host: "127.0.0.1",
+    // url: customize your Remote Redis server URL.
   });
 });

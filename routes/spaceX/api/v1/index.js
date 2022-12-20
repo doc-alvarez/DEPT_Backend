@@ -4,7 +4,7 @@ const buildMergedArray = require("../../../../utils/helpers.js");
 module.exports = async function (fastify, opts) {
   const redis = fastify.redis.client;
 
-  //Get Launches endpoint
+  //GET Launches endpoint
   fastify.get("/:userId/launches", async function (request, reply) {
     const userId = request.params.userId;
     try {
@@ -37,7 +37,7 @@ module.exports = async function (fastify, opts) {
     const flightId = request.params.flightId;
     if (Number(flightId) && Number(flightId) > 0) {
       try {
-        const result = await redis.sadd(`${userId}:favourites`, `${flightId}`);
+        await redis.sadd(`${userId}:favourites`, `${flightId}`);
         return {
           status: 200,
           message: "Favourite added",
@@ -64,11 +64,7 @@ module.exports = async function (fastify, opts) {
     const flightId = request.params.flightId;
     if (Number(flightId) && Number(flightId) > 0) {
       try {
-        const result = await redis.srem(
-          `${userId}:favourites`,
-          `${request.params.flightId}`
-        );
-
+        await redis.srem(`${userId}:favourites`, `${request.params.flightId}`);
         return {
           status: 200,
           message: "Favourite removed",
