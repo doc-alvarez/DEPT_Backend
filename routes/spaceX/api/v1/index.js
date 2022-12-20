@@ -37,11 +37,18 @@ module.exports = async function (fastify, opts) {
     const flightId = request.params.flightId;
     if (Number(flightId) && Number(flightId) > 0) {
       try {
-        await redis.sadd(`${userId}:favourites`, `${flightId}`);
-        return {
-          status: 200,
-          message: "Favourite added",
-        };
+        const result = await redis.sadd(`${userId}:favourites`, `${flightId}`);
+        if (result === 1) {
+          return {
+            status: 200,
+            message: "Favourite added",
+          };
+        } else {
+          return {
+            status: 200,
+            message: "Favourite already added to the list",
+          };
+        }
       } catch (error) {
         reply.statusCode = 500;
         return {
@@ -64,11 +71,21 @@ module.exports = async function (fastify, opts) {
     const flightId = request.params.flightId;
     if (Number(flightId) && Number(flightId) > 0) {
       try {
-        await redis.srem(`${userId}:favourites`, `${request.params.flightId}`);
-        return {
-          status: 200,
-          message: "Favourite removed",
-        };
+        const result = await redis.srem(
+          `${userId}:favourites`,
+          `${request.params.flightId}`
+        );
+        if (result === 1) {
+          return {
+            status: 200,
+            message: "Favourite removed",
+          };
+        } else {
+          return {
+            status: 200,
+            message: "Favourite already removed",
+          };
+        }
       } catch (error) {
         reply.statusCode = 500;
         return {
