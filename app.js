@@ -31,6 +31,7 @@ module.exports = async function (fastify, opts) {
       reply.status(405);
       return "Method Not Allowed\n";
     }
+    reply.status(404);
     return "Not Found\n";
   });
 };
