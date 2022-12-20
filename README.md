@@ -26,6 +26,11 @@ Stack used: Fastify and Redis.
 
 Your redis-server should be running on http://127.0.0.1:6379
 
+## Clone the repository and install Dependencies
+`git clone https://github.com/doc-alvarez/DEPT_Backend.git`
+##
+`npm install`
+
 ## Available Scripts
 
 In the project directory, you can run:
