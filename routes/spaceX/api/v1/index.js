@@ -1,5 +1,9 @@
 "use strict";
 const buildMergedArray = require("../../../../utils/helpers.js");
+const got = require("got");
+
+const LAUNCHES_SERVICE = "https://api.spacexdata.com/v3/launches";
+const ROCKETS_SERVICE = "https://api.spacexdata.com/v3/rockets";
 
 module.exports = async function (fastify, opts) {
   const redis = fastify.redis.client;
@@ -9,15 +13,10 @@ module.exports = async function (fastify, opts) {
     const userId = request.params.userId;
     try {
       //parallel fetch of remote spaceX endpoints and favourites persisted data
-      const [streamLaunches, streamRockets, favouritesArray] =
-        await Promise.all([
-          fetch("https://api.spacexdata.com/v3/launches"),
-          fetch("https://api.spacexdata.com/v3/rockets"),
-          redis.smembers(`${userId}:favourites`),
-        ]);
-      const [dataLaunches, dataRockets] = await Promise.all([
-        streamLaunches.json(),
-        streamRockets.json(),
+      const [dataLaunches, dataRockets, favouritesArray] = await Promise.all([
+        await got(LAUNCHES_SERVICE).json(),
+        await got(ROCKETS_SERVICE).json(),
+        redis.smembers(`${userId}:favourites`),
       ]);
       const mergedArray = buildMergedArray(
         dataLaunches,
