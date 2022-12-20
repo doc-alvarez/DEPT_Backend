@@ -39,12 +39,10 @@ module.exports = async function (fastify, opts) {
         `${userId}:favourites`,
         `${request.params.flightId}`
       );
-      if (result === 1) {
-        return {
-          status: 200,
-          message: "Favourite added",
-        };
-      }
+      return {
+        status: 200,
+        message: "Favourite added",
+      };
     } catch (error) {
       throw error;
     }
@@ -58,12 +56,11 @@ module.exports = async function (fastify, opts) {
         `${userId}:favourites`,
         `${request.params.flightId}`
       );
-      if (result === 1) {
-        return {
-          status: 200,
-          message: "Favourite removed",
-        };
-      }
+
+      return {
+        status: 200,
+        message: "Favourite removed",
+      };
     } catch (error) {
       throw error;
     }
