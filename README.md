@@ -6,6 +6,8 @@ Stack used: Fastify and Redis.
 
 ### Start Redis server locally [More info](https://redis.io/docs/getting-started/installation/)
 
+> :warning: **If you want to provide a remote redis server.**: Edit the REDIS_HOST enviroment variable on .env root file, with your Redis server URL..
+
 ### Ubuntu
 
 > `curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg`
