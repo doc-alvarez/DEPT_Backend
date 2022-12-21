@@ -14,8 +14,8 @@ module.exports = async function (fastify, opts) {
     try {
       //parallel fetch of remote spaceX endpoints and favourites persisted data
       const [dataLaunches, dataRockets, favouritesArray] = await Promise.all([
-        await got(LAUNCHES_SERVICE).json(),
-        await got(ROCKETS_SERVICE).json(),
+        got(LAUNCHES_SERVICE).json(),
+        got(ROCKETS_SERVICE).json(),
         redis.smembers(`${userId}:favourites`),
       ]);
       const mergedArray = buildMergedArray(
